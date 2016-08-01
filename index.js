@@ -4,14 +4,13 @@ window.addEventListener('load', function() {
     button.addEventListener('touchstart', signal);
 
     function isOnline() {
-      var connectionStatus = document.getElementById('connectionStatus');
+        var connectionStatus = document.getElementById('connectionStatus');
 
-      if (navigator.onLine){
-        appendToTerminal('System Online');
-      }
-      else{
-        appendToTerminal('System Offline');
-      }
+        if (navigator.onLine) {
+            appendToTerminal('System Online');
+        } else {
+            appendToTerminal('System Offline');
+        }
     }
 
     window.addEventListener('online', isOnline);
@@ -25,8 +24,8 @@ window.addEventListener('load', function() {
                 .then(function(reg) {
                     return reg.sync.register('signalSync');
                 })
-                .then((test) => {
-                    appendToTerminal('Signal sent')
+                .then(function() {
+                    appendToTerminal('Signal sent');
                 }).catch(function(error) {
                     appendToTerminal('No network.');
                 });
@@ -35,6 +34,6 @@ window.addEventListener('load', function() {
 
     function appendToTerminal(text) {
         document.getElementById('terminal')
-            .innerText += `\n ${(new Date()).toISOString()} ${text}`;
+            .innerText += ('\n' + (new Date()).toISOString() + text);
     }
 });

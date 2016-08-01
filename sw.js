@@ -1,6 +1,6 @@
-this.addEventListener('install', (event) => {
+this.addEventListener('install', function(event) {
     event.waitUntil(
-        caches.open('v1').then((cache) => {
+        caches.open('v1').then(function(cache) {
             return cache.addAll([
                 '/fetch.js',
                 '/index.html',
@@ -12,15 +12,13 @@ this.addEventListener('install', (event) => {
     );
 });
 
-this.addEventListener('fetch', (event) => {
+this.addEventListener('fetch', function(event) {
     event.respondWith(
-        caches.match(event.request).then((response) => {
+        caches.match(event.request).then(function(response) {
             return response || fetch(event.request);
         })
     );
 });
-
-
 
 self.addEventListener('sync', function(event) {
     if (event.tag == 'signalSync') {
@@ -40,7 +38,7 @@ function postToFCM() {
             content_available: true,
             to: 'fbtpjZK_Ato:APA91bEhfmti0ZidTi-pxURqqt7YcuUkdsj69U7nKdM0r9DniLi0KR311xEtjedppVv9kv5nEuBqHEkBleNpO5YEyQBFUCCZFKCzhFl_gHpL9MHDi2glvCeLCQEltnaNAZtv47s09nCh'
         })
-    }).catch(() => {
+    }).catch(function() {
         console.log('failed to signal');
     });
 }

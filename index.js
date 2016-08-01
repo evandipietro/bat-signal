@@ -3,21 +3,38 @@ window.addEventListener('load', function() {
     button.addEventListener('click', signal);
     button.addEventListener('touchstart', signal);
 
+    function isOnline() {
+      var connectionStatus = document.getElementById('connectionStatus');
+
+      if (navigator.onLine){
+        appendToTerminal('System Online');
+      }
+      else{
+        appendToTerminal('System Offline');
+      }
+    }
+
+    window.addEventListener('online', isOnline);
+    window.addEventListener('offline', isOnline);
+    isOnline();
+
+
     function signal() {
-        fetch('https://fcm.googleapis.com/fcm/send', {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'key=AIzaSyA0qWkS8Gt-1lV_3BE26LVuvYiI0lMrWzg'
-            },
-            body: JSON.stringify({
-                content_available: true,
-                to: 'fbtpjZK_Ato:APA91bEhfmti0ZidTi-pxURqqt7YcuUkdsj69U7nKdM0r9DniLi0KR311xEtjedppVv9kv5nEuBqHEkBleNpO5YEyQBFUCCZFKCzhFl_gHpL9MHDi2glvCeLCQEltnaNAZtv47s09nCh'
-            })
-        }).then(function() {
-            document.getElementById('terminal')
-                .innerText += ('\n' + (new Date()).toISOString() + ' Signal sent.');
-        });
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(function(reg) {
+                    return reg.sync.register('signalSync');
+                })
+                .then((test) => {
+                    appendToTerminal('Signal sent')
+                }).catch(function(error) {
+                    appendToTerminal('No network.');
+                });
+        }
+    }
+
+    function appendToTerminal(text) {
+        document.getElementById('terminal')
+            .innerText += `\n ${(new Date()).toISOString()} ${text}`;
     }
 });

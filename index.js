@@ -1,5 +1,6 @@
 window.addEventListener('load', function() {
     var button = document.getElementById('batbutton');
+    var reg;
     button.addEventListener('click', signal);
     button.addEventListener('touchstart', signal);
 
@@ -18,22 +19,25 @@ window.addEventListener('load', function() {
     isOnline();
 
 
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/bat-signal/sw.js')
+            .then(function(registry) {
+                reg = registry;
+                console.log('Worker ready');
+            });
+    }
+
     function signal() {
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
-                .then(function(reg) {
-                    return reg.sync.register('signalSync');
-                })
-                .then(function() {
-                    appendToTerminal('Signal sent');
-                }).catch(function(error) {
-                    appendToTerminal('No network.');
-                });
-        }
+
+        reg.sync.register('signalSync').then(function() {
+            appendToTerminal('Signal sent');
+        }).catch(function(error) {
+            appendToTerminal('No network.');
+        });
     }
 
     function appendToTerminal(text) {
         document.getElementById('terminal')
-            .innerText += ('\n' + (new Date()).toISOString() + text);
+            .innerText += ('\n' + (new Date()).toISOString() + ' ' + text);
     }
 });

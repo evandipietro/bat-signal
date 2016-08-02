@@ -1,0 +1,13 @@
+{
+  "name": "Bat Signal",
+  "short_name": "BatSignal",
+  "icons": [{
+        "src": "images/192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }],
+  "start_url": "/bat-signal/index.html",
+  "display": "standalone",
+  "background_color": "#8B8692",
+  "theme_color": "#000000"
+}

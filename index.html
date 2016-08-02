@@ -1,14 +1,24 @@
 <html>
     <head>
+        <title>Bat Signal</title>
+        <meta name="description" content="A batsignal app.">
+        <meta name=”apple-mobile-web-app-capable” content=”yes”>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="Bat Signal">
+        <meta name="viewport" content="width=device-width">
+        <meta name="theme-color" content="#a040a0">
+        <link rel="apple-touch-icon" sizes="192x192" href="icons/black_gradient_48.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="icons/black_gradient_52.png">
+        <link rel="icon" sizes="192x192" href="icons/black_gradient_48.png">
         <link rel="stylesheet" type="text/css" href="styles.css">
         <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
         <script src="fetch.js"></script>
         <script src="index.js"></script>
         <script src="sw.js"></script>
+        <link rel="manifest" src="/bat-signal/manifest.json">
     </head>
     <body>
         <h1>Push to send a batsignal!</h1>
-        <h2 id="connectionStatus"></h2>
         <button id="batbutton" class="push--skeuo"><img src="batlogo.png" width="100px"></button>
         <div id="terminal">
             Log:
